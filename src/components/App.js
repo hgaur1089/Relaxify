@@ -14,9 +14,9 @@ export default function App() {
         </div>
 
         <div className="list">
-          {data.map((movie) => {
-            <MovieCard movie={movie} />;
-          })}
+          {data.map((movie) => (
+            <MovieCard movie={movie} />
+          ))}
         </div>
       </div>
     </div>
