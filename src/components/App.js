@@ -17,7 +17,7 @@ class App extends React.Component {
 
     console.log('ss', this.props.store.getState());
   }
-
+ 
   render() {
     console.log('render');
     const { list } = this.props.store.getState();
