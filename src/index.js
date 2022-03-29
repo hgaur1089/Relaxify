@@ -1,10 +1,10 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { createStore, applyMiddleware } from "redux";
+import React, { createContext } from 'react';
+import ReactDOM from 'react-dom';
+import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
-import App from "./components/App";
-import "./index.css";
+import App from './components/App';
+import './index.css';
 import rootReducer from './reducers';
 
 // const logger = function({ dispatch, getState}) {
@@ -16,11 +16,13 @@ import rootReducer from './reducers';
 //   }
 // }
 
-const logger = ({dispatch, getState}) => (next) => (action) => {
-  if(typeof action !== 'function')
-  console.log('action type ', action.type);
-  next(action);
-}
+const logger =
+  ({ dispatch, getState }) =>
+  (next) =>
+  (action) => {
+    if (typeof action !== 'function') console.log('action type ', action.type);
+    next(action);
+  };
 
 // const thunk = ({dispatch, getState}) => (next) => (action) => {
 //   if(typeof action === 'function'){
@@ -31,7 +33,19 @@ const logger = ({dispatch, getState}) => (next) => (action) => {
 // }
 
 const store = createStore(rootReducer, applyMiddleware(logger, thunk));
-// console.log(store.getState());
+console.log('state', store.getState());
+
+export const StoreContext = createContext();
+console.log('StoreContext', StoreContext);
+
+class Provider extends React.Component {
+  render() {
+    const { store } = this.props;
+    return <StoreContext.Provider value={store}>
+      {this.props.children}
+    </StoreContext.Provider>;
+  }
+}
 
 // store.dispatch({
 //   type: 'ADD_MOVIES',
@@ -40,4 +54,9 @@ const store = createStore(rootReducer, applyMiddleware(logger, thunk));
 
 // console.log(store.getState());
 
-ReactDOM.render(<App store={store}/>, document.getElementById("root"));
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+);
