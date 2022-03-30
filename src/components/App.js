@@ -1,9 +1,9 @@
-import React from 'react';
-import Navbar from './Navbar';
-import MovieCard from './MovieCard';
-import { addMovies, setShowFavourites } from '../actions';
-import { data as moviesList } from '../data';
-import { connect } from '../index';
+import React from "react";
+import { connect } from "react-redux";
+import Navbar from "./Navbar";
+import MovieCard from "./MovieCard";
+import { addMovies, setShowFavourites } from "../actions";
+import { data as moviesList } from "../data";
 
 class App extends React.Component {
   componentDidMount() {
@@ -26,7 +26,7 @@ class App extends React.Component {
   };
   render() {
     const { movies, search } = this.props; // will return { movies: {}, search: []}
-    console.log('movies', movies);
+    console.log("movies", movies);
     const { list, showFavourites = [], favourites = [] } = movies;
     const displayMovies = showFavourites ? favourites : list;
 
@@ -36,13 +36,13 @@ class App extends React.Component {
         <div className="main">
           <div className="tabs">
             <div
-              className={`tab ${showFavourites ? '' : 'active-tabs'}`}
+              className={`tab ${showFavourites ? "" : "active-tabs"}`}
               onClick={() => this.changeTab(false)}
             >
               Movies
             </div>
             <div
-              className={`tab ${showFavourites ? 'active-tabs' : ''}`}
+              className={`tab ${showFavourites ? "active-tabs" : ""}`}
               onClick={() => this.changeTab(true)}
             >
               Favourites
@@ -81,7 +81,7 @@ class App extends React.Component {
 function mapStateToProps(state) {
   return {
     movies: state.movies,
-    search: state.movies,
+    search: state.movies
   };
 }
 const connectedComponent = connect(mapStateToProps)(App);
